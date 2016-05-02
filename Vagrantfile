@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 3200, host: 3200
+  config.vm.network "forwarded_port", guest: 3100, host: 3100
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -37,7 +37,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../pas-catalog", "/home/vagrant/pas-catalog"
+  config.vm.synced_folder "../pas-catalog", "/home/ubuntu/pas-catalog"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -45,7 +45,7 @@ Vagrant.configure(2) do |config|
   #
   config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
-    vb.name = "workspace-14"
+    vb.name = "workspace"
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
@@ -72,14 +72,13 @@ Vagrant.configure(2) do |config|
 
   # Install node.js...
   config.vm.provision "shell", privileged: false, inline: <<-'SHELL'
-    sudo apt-get update
-    sudo apt-get install python
-    sudo apt-get install g++
+    sudo apt update
+    sudo apt install python
+    sudo apt install g++
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
     source ~/.nvm/nvm.sh
     echo "install nodejs..."
-    nvm install v5 2>/dev/null >/dev/null
-    nvm alias default v5
+    nvm install node 2>/dev/null >/dev/null
     echo "ok."
     npm i -g better-npm-run babel-cli
   SHELL
